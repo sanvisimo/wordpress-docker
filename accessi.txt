@@ -1,0 +1,2 @@
+user: admin
+password: 5h#XdTx3gVMu%^cfla

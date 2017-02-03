@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  web:
+      build: ./wordpress
+      links:
+       - mysql
+      environment:
+       - WORDPRESS_DB_PASSWORD=wordpress
+      ports:
+       - "80:80"
+      working_dir: /var/www/html
+      volumes:
+       - ../wordpress/:/var/www/html/
+  mysql:
+      build:
+        context: ./mysql
+        args:
+          - MYSQL_DATABASE=wordpress
+          - MYSQL_USER=wordpress
+          - MYSQL_PASSWORD=wordpress
+          - MYSQL_ROOT_PASSWORD=wordpress
+      volumes:
+        - mysql:/var/lib/mysql
+      ports:
+        - "3306:3306"
+  phpmyadmin:
+      build: ./phpmyadmin
+      environment:
+          PMA_ARBITRARY: 1
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
+          MYSQL_ROOT_PASSWORD: wordpress
+      ports:
+          - "8080:80"
+      links:
+      # for mysql container
+          - "mysql:db"
+      # for mariadb container
+          # - "mariadb:db"
+
+volumes:
+    mysql:
+        driver: "local"
+    phpmyadmin:
+        driver: "local"

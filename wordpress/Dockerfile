@@ -2,7 +2,7 @@ FROM wordpress
 
 RUN apt-get update
 
-RUN requirements="libpng12-dev libmcrypt-dev wget libmcrypt4 git libcurl3-dev libxml2-dev zlib1g-dev libfreetype6 libjpeg62-turbo libpng12-dev libfreetype6-dev libjpeg62-turbo-dev sudo git apt-transport-https nodejs" \
+RUN requirements="libpng12-dev libmcrypt-dev wget libmcrypt4 git libcurl3-dev libxml2-dev zlib1g-dev libfreetype6 libjpeg62-turbo libpng12-dev libfreetype6-dev libjpeg62-turbo-dev sudo git apt-transport-https nodejs ruby" \
     && apt-get install -y $requirements && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -13,6 +13,8 @@ RUN requirements="libpng12-dev libmcrypt-dev wget libmcrypt4 git libcurl3-dev li
     && docker-php-ext-install zip \
     && requirementsToRemove="libpng12-dev libmcrypt-dev libcurl3-dev libpng12-dev libfreetype6-dev libjpeg62-turbo-dev" \
     && apt-get purge --auto-remove -y $requirementsToRemove
+
+RUN su -c "gem install sass"
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

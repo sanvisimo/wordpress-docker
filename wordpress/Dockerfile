@@ -31,6 +31,7 @@ RUN chmod +x /bin/wp-cli.phar
 #RUN wp plugin install updraftplus --allow-root
 #RUN wp plugin install types --allow-root
 #RUN wp plugin install WPML --allow-root
+#RUN wp plugin install simple-image-size --allow-root
 
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
